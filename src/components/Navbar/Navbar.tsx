@@ -1,17 +1,19 @@
+import Link from "next/link";
+import searchIcon from "./../public/iconamoon_search-bold.svg"
+
 
 const Navbar = () => {
   return (
-    <div style={{left: 1060, top: 46, position: 'absolute', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 48, display: 'inline-flex'}}>
-      <div style={{color: 'white', fontSize: 20, fontFamily: 'Roboto', fontWeight: '700', textTransform: 'capitalize', wordWrap: 'break-word'}}>
+    <nav className="h-6 w-full sticky inline-flex justify-end  bg-black">
+      <Link className="text-white text-xl font-normal font-['Roboto'] capitalize mx-4" href="/">
         Home
-      </div>
-      <div style={{color: 'white', fontSize: 20, fontFamily: 'Roboto', fontWeight: '400', textTransform: 'capitalize', wordWrap: 'break-word'}}>
+      </Link>
+      <Link className="text-white text-xl font-normal font-['Roboto'] capitalize mx-4" href="/saved">
         Saved
-      </div>
-      <div style={{width: 24, height: 24, position: 'relative'}}>
-          <div style={{width: 18, height: 18, left: 3, top: 3, position: 'absolute', border: '2.50px #F8F8F8 solid'}}></div>
-      </div>
-    </div>
+      </Link>     
+      <img className="w-6 h-6 mx-4" alt="search" src="/iconamoon_search-bold.svg" />
+
+    </nav>
   )
 }
 

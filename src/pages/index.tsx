@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import Carousel from "../components/Carousel/Carousel";
 import HeroImage from "~/components/HeroImage/HeroImage";
+import Navbar from "~/components/Navbar/Navbar";
 
 import { api } from "~/utils/api";
 
@@ -21,6 +22,7 @@ export default function Home() {
         
       <main className=" relative bg-neutral-900">
       {/* <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"> */}
+        <Navbar />
         <HeroImage />
         <Carousel category="sample" /> 
         
