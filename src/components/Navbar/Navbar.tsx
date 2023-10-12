@@ -1,14 +1,8 @@
 import Link from "next/link";
 import searchIcon from "./../public/iconamoon_search-bold.svg"
 import UserIcon from "../UserIcon/UserIcon";
+import { roboto } from "../../fonts";
 
-import { Roboto } from "next/font/google";
-const roboto = Roboto({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: "700",
-  variable: "--font-roboto"
-})
 
 const Navbar = () => {
   return (
