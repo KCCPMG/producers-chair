@@ -27,7 +27,7 @@ export default function Home() {
       {/* <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"> */}
         <Navbar />
         <HeroImage />
-        <Carousel category="sample" /> 
+        <Carousel category="Sample" /> 
         
 
     <div style={{left: 45, top: 888.80, position: 'absolute', color: 'white', fontSize: 16, fontFamily: 'Roboto', fontWeight: '700', textTransform: 'capitalize', wordWrap: 'break-word'}}>Top Invested</div>

@@ -1,4 +1,5 @@
 import CarouselImage from "../CarouselImage/CarouselImage"
+import { roboto } from "~/fonts"
 
 interface CarouselProps {
   category: String
@@ -11,8 +12,9 @@ const Carousel = ({category}: CarouselProps) => {
     
       <div className="inline">
         <div 
-          className="text-white text-base text font-bold font-['Roboto'] "
-          style={{left: 45, top: 888.80, position: 'absolute', color: 'white', fontSize: 16, fontFamily: 'Roboto', fontWeight: '700', textTransform: 'capitalize', wordWrap: 'break-word'}}>
+          className={`text-white text-base text font-bold ${roboto.variable} text-white text-base break-words mt-3`}
+          // style={{left: 45, top: 888.80, position: 'absolute'}}
+        >
             {category}
           </div>
         <CarouselImage />
