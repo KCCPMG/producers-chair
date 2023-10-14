@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import Carousel from "../components/Carousel/Carousel";
 import HeroImage from "~/components/HeroImage/HeroImage";
-import Navbar from "~/components/Navbar/Navbar";
 
 import { api } from "~/utils/api";
 
@@ -23,7 +22,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         
-      <Navbar />
       <main className="relative bg-neutral-900 w-screen">
       {/* <main className=" flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"> */}
         <HeroImage />
