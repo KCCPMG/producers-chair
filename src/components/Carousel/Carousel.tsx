@@ -8,19 +8,18 @@ interface CarouselProps {
 
 const Carousel = ({category}: CarouselProps) => {
   return (
-    <div className="carousel w-[1363px] h-[184px] mx-[38px]">
+    <div className="carousel max-w-7xl h-52 mx-auto">
     
-      <div className="inline">
-        <div 
-          className={`text-white text-base text font-bold ${roboto.variable} text-white text-base break-words mt-3`}
-          // style={{left: 45, top: 888.80, position: 'absolute'}}
-        >
-            {category}
-          </div>
-        <CarouselImage />
-        <CarouselImage />
-        <CarouselImage/>
-        <CarouselImage/>
+      <div className={`text-white text-lg font-bold ${roboto.variable} break-words mt-8`}>
+        <div className="inline">
+          {category}
+        </div>
+        <div className="w-full overflow-x-scroll inline-block whitespace-nowrap">
+          <CarouselImage />
+          <CarouselImage />
+          <CarouselImage/>
+          <CarouselImage/>
+        </div>
 
       </div>
     

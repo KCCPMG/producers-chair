@@ -6,7 +6,7 @@ import { roboto } from "../../fonts";
 
 const Navbar = () => {
   return (
-    <nav className={`h-14 leading-14 w-full sticky inline-flex justify-between bg-black py-6 px-7 ${roboto.variable} font-wdc`}>
+    <nav className={`h-18 leading-14 w-screen sticky inline-flex justify-between bg-black py-6 px-7 ${roboto.variable} font-wdc`}>
 
       <UserIcon />
       <div className="inline-flex align-middle">
