@@ -5,10 +5,13 @@ import { roboto } from "../../fonts";
 
 
 const Navbar = () => {
-  return (
-    <nav className={`h-18 leading-14 w-screen sticky inline-flex justify-between bg-black py-6 px-7 ${roboto.variable} font-wdc`}>
 
-      <UserIcon />
+  return (
+    <nav className={`h-18 leading-14 w-screen sticky top-0 z-50 inline-flex justify-between bg-black py-6 px-7 ${roboto.variable} font-wdc`}>
+
+      <div>
+        <UserIcon />
+      </div>
       <div className="inline-flex align-middle">
         <Link className="text-white text-xl font-normal mx-4 my-auto" href="/">
           Home
