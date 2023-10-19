@@ -21,3 +21,5 @@ const UserIcon = () => {
     </div>
   )
 }
+
+export default UserIcon;
