@@ -67,3 +67,26 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Role {
+    id          String    @id @default(cuid())
+    creatorId   String
+    creator     Creator   @relation(fields: [creatorId], references:[id], onDelete: Cascade)
+    role_name   String
+    movieId    String
+    movie       Movie     @relation(fields: [movieId], references: [id], onDelete: Cascade)
+}
+
+model Movie {
+    id          String  @id @default(cuid())
+    description String  @db.VarChar(400)
+    title       String  @db.VarChar(150)
+    crew        Role[]
+}
+
+model Creator {
+    id          String  @id @default(cuid())
+    name        String  @db.VarChar(150)
+    roles       Role[]
+}
+
