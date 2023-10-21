@@ -80,9 +80,24 @@ const ProgressBar = () => {
   )
 }
 
-const CrewPreview = () => {
+type crewProps = {
+  name: string,
+  image?: string,
+  imdb_url?: string,
+  role: string
+}
+
+
+const CrewPreview = ({
+  name,
+  image,
+  imdb_url,
+  role
+} : crewProps) => {
   return (
-    <div></div>
+    <div>
+      <img></img>
+    </div>
   )
 }
 
