@@ -50,6 +50,6 @@
   },
   "packageManager": "npm@8.19.2",
   "prisma": {
-    "db-seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   }
 }
