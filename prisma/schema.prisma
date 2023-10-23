@@ -56,6 +56,7 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    creator       Creator?  
     accounts      Account[]
     sessions      Session[]
 }
@@ -71,22 +72,25 @@ model VerificationToken {
 model Role {
     id          String    @id @default(cuid())
     creatorId   String
-    role_name   String
+    roleName    String
     movieId     String
     creator     Creator   @relation(fields: [creatorId], references:[id], onDelete: Cascade)
     movie       Movie     @relation(fields: [movieId], references: [id], onDelete: Cascade)
 }
 
 model Movie {
-    id          String  @id @default(cuid())
-    description String  @db.VarChar(400)
-    title       String  @db.VarChar(150)
+    id          String    @id @default(cuid())
+    description String    @db.VarChar(400)
+    title       String    @db.VarChar(150)
+    imdb_link   String? 
     crew        Role[]
 }
 
 model Creator {
-    id          String  @id @default(cuid())
-    name        String  @db.VarChar(150)
+    id          String    @id @default(cuid())
+    userId      String    @db.VarChar(150) @unique
+    imdbLink    String? 
     roles       Role[]
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
