@@ -20,7 +20,7 @@ const users = [
   {
     name: "Glenn Powell",
     email: "glennpowell@gmail.com",
-    imdb_link: "https://www.imdb.com/name/nm1412974/?ref_=tt_cl_t_1",
+    imdbLink: "https://www.imdb.com/name/nm1412974/?ref_=tt_cl_t_1",
     movies: [
       {
         title: HIT_MAN,
@@ -72,7 +72,7 @@ const users = [
   },
   {
     name: "Richard Linklater",
-    email: "",
+    email: "trickydick@linklater.com",
     imdb_link: "https://www.imdb.com/name/nm0000500/?ref_=tt_ov_dr",
     movies: [
       {
@@ -104,42 +104,209 @@ const movies = [
   {
     title: HIT_MAN,
     description: "A professor moonlighting as a hit man of sorts for his city police department, descends into dangerous, dubious territory when he finds himself attracted to a woman who enlists his services.",
-    imdb_link: "https://www.imdb.com/title/tt20215968/"
+    imdbLink: "https://www.imdb.com/title/tt20215968/"
 
   }
 ]
 
 
-Promise.all([
+
+
+// Promise.all([
+
+//   // clear all
+//   prisma.user.deleteMany(),
+//   prisma.creator.deleteMany(),
+//   prisma.movie.deleteMany(),
+//   prisma.role.deleteMany(),
   
+//   // create users
+//   Promise.all(users.map(user => {
+//     try {
+//       prisma.user.create(
+//         {
+//           data: {
+//             name: user.name,
+//             email: user.email
+//           }
+//         }
+//       )
+//     } catch(err) {
+//       console.log(`Failure to create ${user.name}`);
+//       // pass
+//     }
+//   })),
+
+//   // create movies
+//   Promise.all(movies.map(async movie => {
+//     try {
+//       await prisma.movie.create(
+//         {
+//           data: {
+//             title: movie.title,
+//             description: movie.description,
+//             imdbLink: movie.imdbLink
+//           }
+//         }
+//       )
+//     } catch(err) {
+//       console.log(`Failure to create ${movie.title}`);
+//       // pass
+//     }
+//   })),
+
+
+//   // create Creators
+//   Promise.all(users.map(async user => {
+//     try {
+//       if (user.imdbLink) {
+//         let foundUser = await prisma.user.findUnique({where: {email: user.email}})
+//         let creator = await prisma.creator.create({
+//           data: {
+//             userId: foundUser.id,
+//             imdbLink: user.imdbLink
+//           }
+//         })
+//       }
+//     } catch(err) {
+//       console.log(`Failed to create Creator ${user.name}`)
+//     }
+//   })),
+
+
+//   // create roles
+//   Promise.all(users.map(async user => {
+//     try {
+//       if (user.imdbLink) {
+//         let foundCreator = await prisma.creator.findUnique({where: {imdbLink: user.imdbLink}});
+//         user.movies.forEach(async movie => {
+//           let foundMovie = await prisma.movie.findUnique({where: {title: movie.title}});
+
+//           movie.roles.forEach(async role => {
+//             await prisma.role.create({
+//               data: {
+//                 creatorId: foundCreator.id,
+//                 roleName: role,
+//                 movieId: foundMovie.id
+//               }
+//             })
+//           })
+//         });
+
+//       }
+//     } catch(err) {
+//       console.log(`Could not create roles for ${user.name}`)
+//     }
+//   }))
+
+// ])
+// .then(results => console.log("finished"))
+// .catch(err => console.log(err));
+
+
+
+async function seed() {
+  await Promise.all([
+    prisma.user.deleteMany(),
+    prisma.creator.deleteMany(),
+    prisma.movie.deleteMany(),
+    prisma.role.deleteMany()
+  ])
+  .then(() => console.log("Tables cleared\n"))
+  .catch(err => console.log(err));
+
+
   // create users
-  Promise.all(users.map(user => {
+  const createUsers = async () => {
+
+    users.forEach(async user => {
+      try {
+        await prisma.user.create(
+          {
+            data: {
+              name: user.name,
+              email: user.email
+            }
+          }
+        )
+        console.log(`Created user ${user.name}`)
+      } catch(err) {
+        console.log(`Failure to create user ${user.name}`);
+        // pass
+      }
+    });
+
+    console.log("Created users\n");
+    return;
+  }
+  
+  await createUsers();
+
+
+  // create movies
+  await Promise.all(movies.map(async movie => {
     try {
-      prisma.user.create(
+      await prisma.movie.create(
         {
           data: {
-            name: user.name,
-            email: user.email
+            title: movie.title,
+            description: movie.description,
+            imdbLink: movie.imdbLink
           }
         }
       )
     } catch(err) {
+      console.log(`Failure to create movie ${movie.title}`);
       // pass
     }
-  })),
-
-  // create movies
+  }));
 
 
-
-
-  // create crew
-
-
+  // create creators
+  await Promise.all(users.map(async user => {
+    try {
+      if (user.imdbLink) {
+        let foundUser = await prisma.user.findUnique({where: {email: user.email}})
+        let creator = await prisma.creator.create({
+          data: {
+            userId: foundUser.id,
+            imdbLink: user.imdbLink
+          }
+        })
+      }
+    } catch(err) {
+      console.log(`Failed to create creator ${user.name}`)
+    }
+  }))
 
 
   // create roles
+  await Promise.all(users.map(async user => {
+    try {
+      if (user.imdbLink) {
+        let foundCreator = await prisma.creator.findUnique({where: {imdbLink: user.imdbLink}});
+        user.movies.forEach(async movie => {
+          let foundMovie = await prisma.movie.findUnique({where: {title: movie.title}});
 
-])
-.then(results => console.log("finished"))
-.catch(err => console.log(err));
+          movie.roles.forEach(async role => {
+            await prisma.role.create({
+              data: {
+                creatorId: foundCreator.id,
+                roleName: role,
+                movieId: foundMovie.id
+              }
+            })
+          })
+        });
+
+      }
+    } catch(err) {
+      console.log(`Could not create roles for ${user.name}`)
+    }
+  }))
+
+
+
+}
+
+seed();
