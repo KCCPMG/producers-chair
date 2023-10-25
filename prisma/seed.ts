@@ -322,14 +322,14 @@ async function seed() {
   }
 
   const createRoles = async () => {
-    const proms = [];
+    const proms: Promise<typeof Role>[] = [];
     users.forEach(user => {
       user.movies?.forEach(movie => {
         movie.roles.forEach(role => {
           let title = movie.title;
           let userId = user.id;
           
-          proms.push(
+          proms.push( new Promise((res, rej) => {
             Promise.all([
               prisma.creator.findUnique({where: {userId}}),
               prisma.movie.findUnique({where: {title}})
@@ -344,18 +344,28 @@ async function seed() {
                   roleName: role
                 }
               })
-              .then(() => {
+              .then((savedRole: typeof Role) => {
                 console.log(`Created role ${user.name} in ${movie.title} as ${role}`)
-                
+                res(savedRole);
+              })
+              .catch((err: unknown) => {
+                console.log(`Could not create role for ${user.name} in ${movie.title} as ${role}`)
+                rej(err)
               })
             })
-          )
+          }));
 
         })
       })
     })
 
-
+    return Promise.all(proms)
+    .then(roles => {
+      console.log(`Created roles\n`);
+    })
+    .catch(err => {
+      console.log(`Could not create users\n;`)
+    })
   }
   
   await createUsers();
