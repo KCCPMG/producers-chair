@@ -1,11 +1,16 @@
 import { useRouter } from "next/router";
 import { roboto } from '../../fonts';
+import { api } from "~/utils/api";
 import InvestButton from "~/components/InvestButton/InvestButton";
 
 
 const Movie = () => {
 
   const router = useRouter();
+
+  const movie = api.movies.movie.useQuery({id: router.query.movie as string});
+  console.log(movie.data);
+
 
   return (
     <main className={`${roboto.variable} relative bg-neutral-900 w-screen`}>
