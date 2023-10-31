@@ -5,23 +5,29 @@ import { GetStaticPropsContext, GetStaticPaths } from "next";
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import InvestButton from "~/components/InvestButton/InvestButton";
 import { movieRouter } from "~/server/api/routers/movie";
+import { Movie } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+
+
 
 
 export async function getStaticProps(
-  context: GetStaticPropsContext<{ id: string }>,
+  context: GetStaticPropsContext<{ movieId: string }>,
 ) {
-  const helpers = createServerSideHelpers({
-    router: movieRouter,
-    ctx: {},
-    transformer: superjson, // optional - adds superjson serialization
-  });
-  const id = context.params?.id as string;
+  // const helpers = createServerSideHelpers({
+  //   router: movieRouter,
+  //   ctx: {},
+  //   transformer: superjson, // optional - adds superjson serialization
+  // });
+  const movieId = context.params?.movieId as string;
   // prefetch `post.byId`
-  await helpers.post.byId.prefetch({ id });
+  // await helpers.post.byId.prefetch({ id });
+  // const movie = api.movies.movie.useQuery({id: movieId as string}).data;
   return {
     props: {
-      trpcState: helpers.dehydrate(),
-      id,
+      // movie,
+      // trpcState: helpers.dehydrate(),
+      movieId,
     },
     revalidate: 1,
   };
@@ -31,15 +37,17 @@ export async function getStaticProps(
 // It may be called again, on a serverless function, if
 // the path has not been generated.
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await prisma.post.findMany({
-    select: {
-      id: true,
-    },
+  const prisma = new PrismaClient();
+
+  const movies: Movie[] = await prisma.movie.findMany({
+    // select: {
+    //   id: true,
+    // },
   });
   return {
-    paths: posts.map((post) => ({
+    paths: movies.map((movie) => ({
       params: {
-        id: post.id,
+        movieId: movie.id,
       },
     })),
     // https://nextjs.org/docs/pages/api-reference/functions/get-static-paths#fallback-blocking
@@ -47,7 +55,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const Movie = () => {
+type MovieViewProps = {
+  movie: Movie
+}
+
+
+const MovieView = ({ movie }: MovieViewProps) => {
 
   // GetServerSideProps(() => {
 
@@ -55,7 +68,7 @@ const Movie = () => {
 
   const router = useRouter();
 
-  const movie = api.movies.movie.useQuery({id: router.query.movie as string}).data;
+  // const movie = api.movies.movie.useQuery({id: router.query.movieId as string}).data;
   console.log(movie);
 
 
@@ -154,4 +167,4 @@ const CrewPreview = ({
   )
 }
 
-export default Movie;
+export default MovieView;
