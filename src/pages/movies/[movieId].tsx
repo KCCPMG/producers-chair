@@ -4,6 +4,7 @@ import { GetStaticPropsContext, GetStaticPaths } from "next";
 import InvestButton from "~/components/InvestButton/InvestButton";
 import { Movie } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
 
 
 
@@ -14,14 +15,21 @@ export async function getStaticProps(
   const movieId = context.params?.movieId as string;
   const prisma = new PrismaClient();
 
-  const movie = await prisma.movie.findUnique({ where: {id: movieId}});
+  return Promise.all([
+    prisma.movie.findUnique({ where: { id: movieId } })
+  ]).then(responses => {
+    const [movie] = responses;
 
-  return {
-    props: {
-      movie
-    },
-    revalidate: 1,
-  };
+    return {
+      props: {
+        movie
+      },
+      revalidate: 1,
+    };
+
+  })
+
+
 }
 
 // This function gets called at build time on server-side.
@@ -91,15 +99,7 @@ const MovieView = ({ movie }: MovieViewProps) => {
           </div>
         </div>
         <div className="flex">
-          <div className="crew">
-            <div className="text-white text-[32px] font-bold capitalize">
-              Crew
-            </div>
-            <div className="crew-container">
-
-            </div>
-
-          </div>
+          {/* <CrewPreview creators={movie.crew}/> */}
           <div className="updates">
             <div>
               Updates
@@ -131,23 +131,33 @@ const ProgressBar = () => {
 }
 
 type crewProps = {
-  name: string,
-  image?: string,
-  imdb_url?: string,
-  role: string
+  creators: typeof Creator[]
 }
 
 
 const CrewPreview = ({
-  name,
-  image,
-  imdb_url,
-  role
+  creators
 } : crewProps) => {
   return (
-    <div>
-      <img></img>
+    <div className="crew inline-block w-1/2 m-auto">
+      <div className="text-white text-[32px] font-bold capitalize">
+        Crew
+      </div>
+      <div className="crew-container">
+        {creators.map(creator => (
+          <div key={creator.id}>
+          <img src={creator.image} alt={creator.name}/>
+          <p>{creator.name}</p>
+          <p>{creator.role}</p>
+          
+          {creator.imdb_url && <Link href={creator.imdb_url}>IMDb</Link>}
+          
+        </div>
+        ))}
+      </div>
+
     </div>
+    
   )
 }
 
