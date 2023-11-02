@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { roboto } from '../../fonts';
 import { GetStaticPropsContext, GetStaticPaths } from "next";
 import InvestButton from "~/components/InvestButton/InvestButton";
-import { Movie } from "@prisma/client";
+import { Movie, Role, Creator } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 
@@ -16,13 +16,35 @@ export async function getStaticProps(
   const prisma = new PrismaClient();
 
   return Promise.all([
-    prisma.movie.findUnique({ where: { id: movieId } })
+    prisma.movie.findUnique(
+      { 
+        where: { 
+          id: movieId 
+        },
+        include: {
+          crew: {
+            include: {
+              creator: {
+                include: {
+                  user: {
+                    select: {
+                      name: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    )
   ]).then(responses => {
     const [movie] = responses;
 
     return {
       props: {
-        movie
+        movie,
+        // crew
       },
       revalidate: 1,
     };
@@ -56,25 +78,29 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 type MovieViewProps = {
-  movie: Movie
+  movie: Movie & {crew: Role[]},
+  // crew: Role[]
 }
 
 
 const MovieView = ({ movie }: MovieViewProps) => {
 
+  const {description, title, imdbLink, crew } = movie;
+
+  console.log({movie});
 
   return (
     <main className={`${roboto.variable} text-white relative bg-neutral-900 w-screen`}>
       <div className="max-w-7xl mx-auto">
         <h1>{movie.title}</h1>
-        <img className="max-w-7xl h-96 relative mx-auto rounded-sm" src="https://via.placeholder.com/1280x384"  />
+        <img className="max-w-7xl h-96 relative mx-auto rounded-sm" src="https://via.placeholder.com/1280x384"  alt={title}/>
         <div className="max-w-7xl h-96 relative mx-auto bg-red-900 rounded-[5px] flex">
           <div className="inline-block w-1/2 m-auto">
             <div className="text-white text-[32px] font-bold capitalize">
               Summary: 
             </div>
             <div className="w-[469px] text-white text-xl font-normal p-2 border-2">
-              {movie ? movie.description : "Loading..."}
+              {movie ? description : "Loading..."}
             </div>
           </div>
           <div className="inline-block w-1/2 m-auto">
@@ -99,7 +125,7 @@ const MovieView = ({ movie }: MovieViewProps) => {
           </div>
         </div>
         <div className="flex">
-          {/* <CrewPreview creators={movie.crew}/> */}
+          <CrewPreview crew={movie.crew}/>
           <div className="updates">
             <div>
               Updates
@@ -131,12 +157,12 @@ const ProgressBar = () => {
 }
 
 type crewProps = {
-  creators: typeof Creator[]
+  crew: typeof Creator[]
 }
 
 
 const CrewPreview = ({
-  creators
+  crew
 } : crewProps) => {
   return (
     <div className="crew inline-block w-1/2 m-auto">
@@ -144,7 +170,7 @@ const CrewPreview = ({
         Crew
       </div>
       <div className="crew-container">
-        {creators.map(creator => (
+        {crew.map(creator => (
           <div key={creator.id}>
           <img src={creator.image} alt={creator.name}/>
           <p>{creator.name}</p>
