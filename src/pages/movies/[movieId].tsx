@@ -170,16 +170,32 @@ const CrewPreview = ({
         Crew
       </div>
       <div className="crew-container">
-        {crew.map(creator => (
-          <div key={creator.id}>
-          <img src={creator.image} alt={creator.name}/>
-          <p>{creator.name}</p>
-          <p>{creator.role}</p>
-          
-          {creator.imdb_url && <Link href={creator.imdb_url}>IMDb</Link>}
-          
-        </div>
-        ))}
+        {crew.map(role => {
+          console.log(role);
+          const creator = role.creator;
+          return (
+          <div key={role.id}>
+            <img src={creator.image} alt={creator.name}/>
+            <p>
+              <span>
+                <Link className="underline" href={`/users/${creator.userId}`}>
+                  {creator.user.name}
+                </Link>
+              </span>
+              <span> • </span>
+              <span>{role.roleName}</span>
+            </p>
+            <p>
+              {creator.imdbLink && 
+                <Link className="underline" href={creator.imdbLink}>IMDb</Link>
+              }
+            </p>
+            
+            {creator.imdb_url && <Link href={creator.imdb_url}>IMDb</Link>}
+            
+          </div>
+          )
+        })}
       </div>
 
     </div>
