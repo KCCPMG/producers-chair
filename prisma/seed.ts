@@ -25,6 +25,7 @@ const users = [
     name: "Glenn Powell",
     email: "glennpowell@gmail.com",
     imdbLink: "https://www.imdb.com/name/nm1412974/?ref_=tt_cl_t_1",
+    image: "https://m.media-amazon.com/images/M/MV5BMGEzMTIwM2UtYjc5MC00ZGI4LWJiOTAtYzAwZmU0OTYzYWIxXkEyXkFqcGdeQXVyNDg0MzQyNA@@._V1_FMjpg_UY1920_.jpg",
     movies: [
       {
         title: HIT_MAN,
@@ -40,6 +41,7 @@ const users = [
     name: "Adria Arjona",
     email: "adriaarjona@gmail.com",
     imdbLink: "https://www.imdb.com/name/nm5245722/?ref_=tt_cl_t_2",
+    image: "https://m.media-amazon.com/images/M/MV5BZWIzMDVkYWUtYTA3My00MzIwLWJhY2MtNWNlODA3NWQyYmI4XkEyXkFqcGdeQXVyMTI2Nzk2ODk3._V1_FMjpg_UY1582_.jpg",
     movies: [
       {
         title: HIT_MAN,
@@ -54,6 +56,7 @@ const users = [
     name: "Retta",
     email: "retta@retta.org",
     imdbLink: "https://www.imdb.com/name/nm0802876/?ref_=tt_cl_t_3",
+    image: "https://m.media-amazon.com/images/M/MV5BMjQyMTQ2MjQ5Ml5BMl5BanBnXkFtZTgwNzY3MDAxNzE@._V1_FMjpg_UX426_.jpg",
     movies: [
       {
         title: HIT_MAN,
@@ -68,6 +71,7 @@ const users = [
     name: "Austin Amelio",
     email: "auiaeio@yahoo.com",
     imdbLink: "https://www.imdb.com/name/nm3994184/?ref_=tt_cl_t_4",
+    image: "https://m.media-amazon.com/images/M/MV5BMTkxMDU3NTY2NV5BMl5BanBnXkFtZTgwNzI5MjEzODE@._V1_FMjpg_UX2048_.jpg",
     movies: [
       {
         title: HIT_MAN,
@@ -82,6 +86,7 @@ const users = [
     name: "Richard Linklater",
     email: "trickydick@linklater.com",
     imdbLink: "https://www.imdb.com/name/nm0000500/?ref_=tt_ov_dr",
+    image: "https://m.media-amazon.com/images/M/MV5BMTQ0Mzc2NzY0Ml5BMl5BanBnXkFtZTcwOTI3OTI5MQ@@._V1_FMjpg_UX280_.jpg",
     movies: [
       {
         title: HIT_MAN,
@@ -97,6 +102,7 @@ const users = [
     name: "Skip Hollandsworth",
     email: "",
     imdbLink: "https://www.imdb.com/name/nm0390912/?ref_=tt_ov_wr",
+    image: "",
     movies: [
       {
         title: HIT_MAN,
@@ -113,7 +119,8 @@ const movies = [
   {
     title: HIT_MAN,
     description: "A professor moonlighting as a hit man of sorts for his city police department, descends into dangerous, dubious territory when he finds himself attracted to a woman who enlists his services.",
-    imdbLink: "https://www.imdb.com/title/tt20215968/"
+    imdbLink: "https://www.imdb.com/title/tt20215968/",
+    image: "https://m.media-amazon.com/images/M/MV5BZDdmZjRiYmItMGQwZC00YWRjLWJjMzUtMDdiMTM4MjY0OGJlXkEyXkFqcGdeQXVyMTIzNDk2NzE2._V1_FMjpg_UX2000_.jpg"
 
   }
 ]

@@ -83,6 +83,7 @@ model Movie {
     description String    @db.VarChar(400)
     title       String    @db.VarChar(150)
     imdbLink    String? 
+    image       String?
     crew        Role[]
 }
 
@@ -90,6 +91,7 @@ model Creator {
     id          String    @id @default(cuid())
     userId      String    @db.VarChar(150) @unique
     imdbLink    String?   @unique
+    image       String?
     roles       Role[]
     user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
