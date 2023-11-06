@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { roboto } from '../../fonts';
 import { GetStaticPropsContext, GetStaticPaths } from "next";
 import InvestButton from "~/components/InvestButton/InvestButton";
@@ -85,7 +84,7 @@ type MovieViewProps = {
 
 const MovieView = ({ movie }: MovieViewProps) => {
 
-  const {description, title, imdbLink, crew } = movie;
+  const {description, title, image, imdbLink, crew } = movie;
 
   console.log({movie});
 
@@ -93,7 +92,11 @@ const MovieView = ({ movie }: MovieViewProps) => {
     <main className={`${roboto.variable} text-white relative bg-neutral-900 w-screen`}>
       <div className="max-w-7xl mx-auto">
         <h1>{movie.title}</h1>
-        <img className="max-w-7xl h-96 relative mx-auto rounded-sm" src="https://via.placeholder.com/1280x384"  alt={title}/>
+        <img 
+          className="max-w-7xl h-96 relative mx-auto rounded-sm" 
+          src={image ? image : "https://via.placeholder.com/1280x384"}
+          alt={title}
+        />
         <div className="max-w-7xl h-96 relative mx-auto bg-red-900 rounded-[5px] flex">
           <div className="inline-block w-1/2 m-auto">
             <div className="text-white text-[32px] font-bold capitalize">
@@ -125,7 +128,7 @@ const MovieView = ({ movie }: MovieViewProps) => {
           </div>
         </div>
         <div className="flex">
-          <CrewPreview crew={movie.crew}/>
+          <CrewPreview crew={crew}/>
           <div className="updates">
             <div>
               Updates

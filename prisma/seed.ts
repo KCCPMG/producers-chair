@@ -100,9 +100,9 @@ const users = [
   {
     id: null,
     name: "Skip Hollandsworth",
-    email: "",
+    email: "skippyh@hotmail.com",
     imdbLink: "https://www.imdb.com/name/nm0390912/?ref_=tt_ov_wr",
-    image: "",
+    image: "https://m.media-amazon.com/images/M/MV5BMjEyOTRkNzAtNDM3ZS00YTA4LTk4ZmMtNDUwZjk3ZTk4ODk2XkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_FMjpg_UX1180_.jpg",
     movies: [
       {
         title: HIT_MAN,
@@ -181,7 +181,8 @@ async function seed() {
           data: {
             title: movie.title,
             description: movie.description,
-            imdbLink: movie.imdbLink
+            imdbLink: movie.imdbLink,
+            image: movie.image
           }
         })
         .then((newMovie: typeof Movie) => {
@@ -213,7 +214,8 @@ async function seed() {
         prisma.creator.create({
           data: {
             userId: user.id,
-            imdbLink: user.imdbLink
+            imdbLink: user.imdbLink,
+            image: user.image
           }
         })
         .then((creator: typeof Creator) => {
