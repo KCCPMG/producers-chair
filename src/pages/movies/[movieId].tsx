@@ -92,11 +92,14 @@ const MovieView = ({ movie }: MovieViewProps) => {
     <main className={`${roboto.variable} text-white relative bg-neutral-900 w-screen`}>
       <div className="max-w-7xl mx-auto">
         <h1>{movie.title}</h1>
-        <img 
-          className="max-w-7xl h-96 relative mx-auto rounded-sm" 
-          src={image ? image : "https://via.placeholder.com/1280x384"}
-          alt={title}
-        />
+        <div className="max-w-7xl h-96 relative mx-auto rounded-sm">
+
+          <img 
+            className="w-full h-full object-cover object-center absolute top-0 left-0" 
+            src={image ? image : "https://via.placeholder.com/1280x384"}
+            alt={title}
+          />
+        </div>
         <div className="max-w-7xl h-96 relative mx-auto bg-red-900 rounded-[5px] flex">
           <div className="inline-block w-1/2 m-auto">
             <div className="text-white text-[32px] font-bold capitalize">
@@ -174,25 +177,33 @@ const CrewPreview = ({
       </div>
       <div className="crew-container">
         {crew.map(role => {
-          console.log(role);
+          // console.log(role);
           const creator = role.creator;
           return (
           <div key={role.id}>
-            <img src={creator.image} alt={creator.name}/>
-            <p>
-              <span>
-                <Link className="underline" href={`/users/${creator.userId}`}>
-                  {creator.user.name}
-                </Link>
-              </span>
-              <span> • </span>
-              <span>{role.roleName}</span>
-            </p>
-            <p>
-              {creator.imdbLink && 
-                <Link className="underline" href={creator.imdbLink}>IMDb</Link>
-              }
-            </p>
+            <div className="inline-block p-2">
+              <img 
+                className="w-12 h-12 rounded-3xl object-cover"
+                src={creator.image} 
+                alt={creator.name}
+              />
+            </div>
+            <div className="inline-block p-2">
+              <p>
+                <span>
+                  <Link className="underline" href={`/users/${creator.userId}`}>
+                    {creator.user.name}
+                  </Link>
+                </span>
+                <span> • </span>
+                <span>{role.roleName}</span>
+              </p>
+              <p>
+                {creator.imdbLink && 
+                  <Link className="underline" href={creator.imdbLink}>IMDb</Link>
+                }
+              </p>
+            </div>
             
             {creator.imdb_url && <Link href={creator.imdb_url}>IMDb</Link>}
             
