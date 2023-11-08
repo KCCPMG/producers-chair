@@ -120,7 +120,8 @@ const movies = [
     title: HIT_MAN,
     description: "A professor moonlighting as a hit man of sorts for his city police department, descends into dangerous, dubious territory when he finds himself attracted to a woman who enlists his services.",
     imdbLink: "https://www.imdb.com/title/tt20215968/",
-    image: "https://m.media-amazon.com/images/M/MV5BZDdmZjRiYmItMGQwZC00YWRjLWJjMzUtMDdiMTM4MjY0OGJlXkEyXkFqcGdeQXVyMTIzNDk2NzE2._V1_FMjpg_UX2000_.jpg"
+    image: "https://m.media-amazon.com/images/M/MV5BZDdmZjRiYmItMGQwZC00YWRjLWJjMzUtMDdiMTM4MjY0OGJlXkEyXkFqcGdeQXVyMTIzNDk2NzE2._V1_FMjpg_UX2000_.jpg",
+    slug: "hit-man"
 
   }
 ]
@@ -182,7 +183,8 @@ async function seed() {
             title: movie.title,
             description: movie.description,
             imdbLink: movie.imdbLink,
-            image: movie.image
+            image: movie.image,
+            slug: movie.slug
           }
         })
         .then((newMovie: typeof Movie) => {
