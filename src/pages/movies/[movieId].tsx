@@ -18,7 +18,7 @@ export async function getStaticProps(
     prisma.movie.findUnique(
       { 
         where: { 
-          id: movieId 
+          id: movieId
         },
         include: {
           crew: {
@@ -61,7 +61,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const movies: {id: string}[] = await prisma.movie.findMany({
     select: {
-      id: true,
+      id: true
     },
   });
 
@@ -85,8 +85,6 @@ type MovieViewProps = {
 const MovieView = ({ movie }: MovieViewProps) => {
 
   const {description, title, image, imdbLink, crew } = movie;
-
-  console.log({movie});
 
   return (
     <main className={`${roboto.variable} text-white relative bg-neutral-900 w-screen`}>
@@ -177,7 +175,6 @@ const CrewPreview = ({
       </div>
       <div className="crew-container">
         {crew.map(role => {
-          // console.log(role);
           const creator = role.creator;
           return (
           <div key={role.id}>

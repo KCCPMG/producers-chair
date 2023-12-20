@@ -118,10 +118,10 @@ const users = [
 const movies = [
   {
     title: HIT_MAN,
+    id: 'hit-man',
     description: "A professor moonlighting as a hit man of sorts for his city police department, descends into dangerous, dubious territory when he finds himself attracted to a woman who enlists his services.",
     imdbLink: "https://www.imdb.com/title/tt20215968/",
-    image: "https://m.media-amazon.com/images/M/MV5BZDdmZjRiYmItMGQwZC00YWRjLWJjMzUtMDdiMTM4MjY0OGJlXkEyXkFqcGdeQXVyMTIzNDk2NzE2._V1_FMjpg_UX2000_.jpg",
-    slug: "hit-man"
+    image: "https://m.media-amazon.com/images/M/MV5BZDdmZjRiYmItMGQwZC00YWRjLWJjMzUtMDdiMTM4MjY0OGJlXkEyXkFqcGdeQXVyMTIzNDk2NzE2._V1_FMjpg_UX2000_.jpg"
 
   }
 ]
@@ -181,10 +181,10 @@ async function seed() {
         prisma.movie.create({
           data: {
             title: movie.title,
+            id: movie.id,
             description: movie.description,
             imdbLink: movie.imdbLink,
-            image: movie.image,
-            slug: movie.slug
+            image: movie.image
           }
         })
         .then((newMovie: typeof Movie) => {

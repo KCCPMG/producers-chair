@@ -84,7 +84,6 @@ model Movie {
     title       String    @db.VarChar(150)
     imdbLink    String? 
     image       String?
-    slug        String?  @db.VarChar(150)
     crew        Role[]
 }
 
